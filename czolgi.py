@@ -21,6 +21,6 @@ def main():
 
 if __name__ == "__main__":
 	main()
-	
-sys.exit(0)
 
+print "CYA"
+sys.exit(0)
