@@ -61,7 +61,7 @@ class game:
                 self.boardkeys=pygame.key.get_pressed()
                 
         if self.boardkeys[K_TAB]:
-            print_text(self.a_w-12, self.a_h-10, str(int(self.fpsclock.get_fps())), self.bufor)
+            print_text(self.a_w-18, self.a_h-10, str(int(self.fpsclock.get_fps())), self.bufor)
         
         self.screen.blit(self.bufor,(0,0))
         pygame.display.flip() 
