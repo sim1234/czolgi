@@ -7,7 +7,7 @@ class kula:
     def jezdz(self, dane):
         self.px+=self.vx/4.0
         self.py+=self.vy/4.0
-        if self.px<=1 or self.px>=dane.e_w-1 or self.py<=1 or self.py>=dane.e_h-1: return 1
+        if self.px<0 or self.px>dane.e_w or self.py<0 or self.py>dane.e_h: return 1
         t=0
         tlen=len(dane.gracze)
         while t<tlen:
@@ -31,35 +31,33 @@ class kula:
             dane.map.zamien(dane,(int(self.px+1),int(self.py+1)))
             dane.sounds["destroy"].play()
             return 1
+                
         pto=1
-        odbtmp=[0,
-        0,
-        dane.map.odbije(dane.map.bm.get_at((int(self.px), int(self.py-1)))),
-        0,
-        dane.map.odbije(dane.map.bm.get_at((int(self.px-1), int(self.py)))),
-        0,
-        dane.map.odbije(dane.map.bm.get_at((int(self.px+1), int(self.py)))),
-        0,
-        dane.map.odbije(dane.map.bm.get_at((int(self.px), int(self.py+1)))),
-        0] 
-
-        if (odbtmp[4] and odbtmp[2]) or (odbtmp[6] and odbtmp[8]):
+        if self.py>=1: g=dane.map.odbije(dane.map.bm.get_at((int(self.px), int(self.py-1))))
+        else: g=0
+        if self.px>=1: l=dane.map.odbije(dane.map.bm.get_at((int(self.px-1), int(self.py))))
+        else: l=0
+        if self.px<dane.map.w-1: p=dane.map.odbije(dane.map.bm.get_at((int(self.px+1), int(self.py))))
+        else: p=0
+        if self.py<=dane.map.h-1: d=dane.map.odbije(dane.map.bm.get_at((int(self.px), int(self.py+1))))
+        else: d=0
+        
+        if (l and g) or (p and d):
             xt=self.vx
             self.vx=self.vy*-1
             self.vy=xt*-1
             pto=0
-        if (odbtmp[2] and odbtmp[6]) or (odbtmp[8] and odbtmp[4]):
+        if (g and p) or (d and l):
             xt=self.vx
             self.vx=self.vy
             self.vy=xt
             pto=0
-        if pto and (odbtmp[4] or odbtmp[6]): self.vx*=-1
-        if pto and (odbtmp[8] or odbtmp[2]): self.vy*=-1
-        if odbtmp[4] or odbtmp[6] or odbtmp[8] or odbtmp[2]:
+        if pto and (l or p): self.vx*=-1
+        if pto and (d or g): self.vy*=-1
+        if g or l or p or d:
             dane.sounds["bounce"].play()
         
         return 0
         
     def rysuj(self, dane):
-        global bufor
         pygame.draw.circle(dane.bufor, (0,0,0), (int(self.px), int(self.py)), 2, 0)

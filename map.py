@@ -7,6 +7,9 @@ class mapa:
             self.bm=load_image(self.name+"/mapa.bmp")
             self.rozw=(0,0,0)
             self.odb=(0,0,255)
+            t=self.bm.get_rect()
+            self.w=t.w
+            self.h=t.h
     
     def reload(self):
         self.__init__(self.name)
@@ -28,7 +31,7 @@ class mapa:
         return r
         
     def zamien(self, dane, (px, py)):
-        if(px<0 or py<0 or px>dane.e_w or py>dane.e_h): return 0
+        if(px<0 or py<0 or px>=self.w or py>=self.h): return 0
         c=self.bm.get_at((px,py))
         if self.zniszczy(c):
             c[0]+=191

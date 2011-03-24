@@ -21,7 +21,7 @@ class player:
         #colr=colr[1:-1]
         #print colr
         #colr=colr.split(",")
-        colr= str(colr)[1:-1].split(", ")
+        colr=str(colr)[1:-1].split(", ")
         self.color=(int(colr[0]), int(colr[1]), int(colr[2]))
         self.pa_x=int(pp_x)
         self.pa_y=int(pp_y)
@@ -67,13 +67,17 @@ class player:
         
         x=0
         while x<self.h: # o scianki
-            if dane.map.dobije(dane.map.bm.get_at((int(self.pozx-1), int(self.pozy+x)))): ml=0
-            if dane.map.dobije(dane.map.bm.get_at((int(self.pozx+self.w), int(self.pozy+x)))): mr=0
+            if dane.boardkeys[self.k_left] and self.pozx>=1 and self.pozy<dane.map.h-x:
+                if dane.map.dobije(dane.map.bm.get_at((int(self.pozx-1), int(self.pozy+x)))): ml=0
+            if dane.boardkeys[self.k_right] and self.pozx<dane.map.w-self.w and self.pozy<dane.map.h-x:
+                if dane.map.dobije(dane.map.bm.get_at((int(self.pozx+self.w), int(self.pozy+x)))): mr=0
             x+=1
         x=0;
         while x<self.w:
-            if dane.map.dobije(dane.map.bm.get_at((int(self.pozx+x), int(self.pozy-1)))): mu=0
-            if dane.map.dobije(dane.map.bm.get_at((int(self.pozx+x), int(self.pozy+self.h)))): md=0
+            if dane.boardkeys[self.k_up] and self.pozx<dane.map.w-x and self.pozy>=1:
+                if dane.map.dobije(dane.map.bm.get_at((int(self.pozx+x), int(self.pozy-1)))): mu=0
+            if dane.boardkeys[self.k_down] and self.pozx<dane.map.w-x and self.pozy<dane.map.h-self.h:
+                if dane.map.dobije(dane.map.bm.get_at((int(self.pozx+x), int(self.pozy+self.h)))): md=0
             x+=1
 
         if self.pozx <= 0: ml=0
@@ -81,7 +85,7 @@ class player:
         if self.pozy <= 0: mu=0
         if self.pozy >= dane.e_h-self.h: md=0
       
-        if dane.boardkeys[self.k_left] and not dane.boardkeys[self.k_up] and not dane.boardkeys[self.k_down]:
+        if dane.boardkeys[self.k_left] and not dane.boardkeys[self.k_up] and not dane.boardkeys[self.k_down]:# ruch pion / poziom
             if ml: self.pozx-=self.v
             self.kier=7
         if dane.boardkeys[self.k_right] and not dane.boardkeys[self.k_up] and not dane.boardkeys[self.k_down]: 
@@ -94,7 +98,7 @@ class player:
             if md: self.pozy+=self.v 
             self.kier=5
       
-        if dane.boardkeys[self.k_left] and dane.boardkeys[self.k_up]:
+        if dane.boardkeys[self.k_left] and dane.boardkeys[self.k_up]:#ruch skos
             if ml: self.pozx-=0.7*self.v
             if mu: self.pozy-=0.7*self.v 
             self.kier=8
@@ -112,21 +116,31 @@ class player:
             self.kier=4
       
         if self.pozx < 0: self.pozx=0
-        if self.pozx+1 > dane.e_w-self.w: self.pozx=dane.e_w-self.w
+        if self.pozx > dane.e_w-self.w: self.pozx=dane.e_w-self.w
         if self.pozy < 0: self.pozy=0
         if self.pozy > dane.e_h-self.h: self.pozy=dane.e_h-self.h
         
         if dane.boardkeys[self.k_shoot] and self.loaded:
-            
+            #8 1 2
+            #7 - 3
+            #6 5 4
             done=0
-            if self.kier==1 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w/2),int(self.pozy-1)))): t=kula(self.pozx+self.w/2,self.pozy-1,0,-2-self.v); done=1
-            if self.kier==3 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w),int(self.pozy+self.h/2)))): t=kula(self.pozx+self.w+1,self.pozy+self.h/2,2+self.v,0); done=1
-            if self.kier==5 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w/2),int(self.pozy+self.h)))): t=kula(self.pozx+self.w/2,self.pozy+self.h+1,0,2+self.v); done=1
-            if self.kier==7 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx-1),int(self.pozy+self.h/2)))): t=kula(self.pozx-1,self.pozy+self.h/2,-2-self.v,0); done=1
-            if self.kier==2 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w+1),int(self.pozy-1)))): t=kula(self.pozx+self.w+1,self.pozy-1,2+self.v,-2-self.v); done=1
-            if self.kier==4 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w+1),int(self.pozy+self.h+1)))): t=kula(self.pozx+self.w+1,self.pozy+self.h+1,2+self.v,2+self.v); done=1
-            if self.kier==6 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx-1),int(self.pozy+self.h+1)))): t=kula(self.pozx-1,self.pozy+self.h+1,-2-self.v,2+self.v); done=1
-            if self.kier==8 and not dane.map.odbije(dane.map.bm.get_at((int(self.pozx-1),int(self.pozy-1)))): t=kula(self.pozx-1,self.pozy-1,-2-self.v,-2-self.v); done=1
+            if self.kier==1 and self.pozx<dane.map.w-self.w/2 and self.pozy>=1:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w/2),int(self.pozy-1)))): t=kula(self.pozx+self.w/2,self.pozy-1,0,-2-self.v); done=1
+            if self.kier==3 and self.pozx<dane.map.w-self.w and self.pozy<dane.map.h-self.h/2:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w),int(self.pozy+self.h/2)))): t=kula(self.pozx+self.w+1,self.pozy+self.h/2,2+self.v,0); done=1
+            if self.kier==5 and self.pozx<dane.map.w-self.w/2 and self.pozy<dane.map.h-self.h: 
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w/2),int(self.pozy+self.h)))): t=kula(self.pozx+self.w/2,self.pozy+self.h+1,0,2+self.v); done=1
+            if self.kier==7 and self.pozx>=1 and self.pozy<dane.map.h-self.h/2:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx-1),int(self.pozy+self.h/2)))): t=kula(self.pozx-1,self.pozy+self.h/2,-2-self.v,0); done=1
+            if self.kier==2 and self.pozx<dane.map.w-self.w-1 and self.pozy>=1:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w+1),int(self.pozy-1)))): t=kula(self.pozx+self.w+1,self.pozy-1,2+self.v,-2-self.v); done=1
+            if self.kier==4 and self.pozx<dane.map.w-self.w-1 and self.pozy<dane.map.h-self.h-1:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx+self.w+1),int(self.pozy+self.h+1)))): t=kula(self.pozx+self.w+1,self.pozy+self.h+1,2+self.v,2+self.v); done=1
+            if self.kier==6 and self.pozx>=1 and self.pozy<dane.map.h-self.h-1:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx-1),int(self.pozy+self.h+1)))): t=kula(self.pozx-1,self.pozy+self.h+1,-2-self.v,2+self.v); done=1
+            if self.kier==8 and self.pozx>=1 and self.pozy>=1:
+                if not dane.map.odbije(dane.map.bm.get_at((int(self.pozx-1),int(self.pozy-1)))): t=kula(self.pozx-1,self.pozy-1,-2-self.v,-2-self.v); done=1
             if done:
                 dane.sounds["shot"].play()
                 dane.nab.append(t)
