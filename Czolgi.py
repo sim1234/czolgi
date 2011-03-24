@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # coding: utf-8
 
-#print "Running..."
-
 import pygame, sys, os, time, string
 from pygame.locals import * 
 
