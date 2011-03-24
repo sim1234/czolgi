@@ -30,7 +30,7 @@ def load_sounds(lista, roz=".wav"):
     tlen=len(lista)
     t=0
     while t<tlen:
-        r.update({lista[t]:pygame.mixer.Sound(pa(lista[t]+roz))})
+        r.update({lista[t]:pygame.mixer.Sound(pa("sys/"+lista[t]+roz))})
         t+=1
     return r
 

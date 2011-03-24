@@ -9,7 +9,7 @@ class game:
         self.e_w=a_w-a_wd
         self.e_h=a_h-a_hd
         self.fps=maxfps
-        pygame.display.set_icon(pygame.image.load(pa("czolgi.png")))
+        pygame.display.set_icon(pygame.image.load(pa("data/czolgi.png")))
         self.window = pygame.display.set_mode((a_w, a_h)) 
         pygame.display.set_caption(caption) 
         self.screen = pygame.display.get_surface() 
@@ -19,7 +19,7 @@ class game:
         self.bufor=pygame.Surface((a_w,a_h))
         self.gracze=[]
         self.nab=[]
-        self.map=mapa(pa("mapa1"),0)
+        self.map=mapa(pa("maps/mapa1"),0)
         self.lmousekeys=self.mousekeys=pygame.mouse.get_pressed()
         self.lboardkeys=self.boardkeys=pygame.key.get_pressed()
         self.lec=self.jezd=self.wait=0
@@ -28,7 +28,7 @@ class game:
         self.kbufor=pygame.Surface((a_w,a_h))
         self.fpsclock=pygame.time.Clock()
         self.ini=inifile()
-        self.ini.open(pa("czolgi.ini"))
+        self.ini.open(pa("data/czolgi.ini"))
         self.sounds=load_sounds(("hit", "shot", "destroy", "bounce"))
         pygame.time.set_timer(27, 50)
          
