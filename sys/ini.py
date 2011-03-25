@@ -8,6 +8,10 @@ class inifile:
         f.close()
         return self.tresc
       
+    def __init__(self, nazwa=0):
+        if nazwa:
+            self.open(nazwa)
+      
     def save(self):
         f = open(self.name, 'w')
         f.write(self.tresc[1:-1])

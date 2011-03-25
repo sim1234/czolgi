@@ -21,8 +21,9 @@ class player:
         #colr=colr[1:-1]
         #print colr
         #colr=colr.split(",")
-        colr=str(colr)[1:-1].split(", ")
-        self.color=(int(colr[0]), int(colr[1]), int(colr[2]))
+        #colr=str(colr)[1:-1].split(", ")
+        #self.color=(int(colr[0]), int(colr[1]), int(colr[2]))
+        self.color=str_to_col(colr)
         self.pa_x=int(pp_x)
         self.pa_y=int(pp_y)
         self.w=int(width)

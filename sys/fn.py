@@ -30,7 +30,7 @@ def load_sounds(lista, roz=".wav"):
     tlen=len(lista)
     t=0
     while t<tlen:
-        r.update({lista[t]:pygame.mixer.Sound(pa("sys/"+lista[t]+roz))})
+        r.update({lista[t]:pygame.mixer.Sound(pa("data/"+lista[t]+roz))})
         t+=1
     return r
 
@@ -79,4 +79,9 @@ def get_key():
             if key[t] and t!=K_NUMLOCK and t!=K_SCROLLOCK and t!=K_CAPSLOCK : return t
             t+=1
         pygame.time.wait(1)
+        
+def str_to_col(col_str):
+    color=str(col_str)[1:-1].split(", ")
+    color=(int(color[0]), int(color[1]), int(color[2]))
+    return color
 

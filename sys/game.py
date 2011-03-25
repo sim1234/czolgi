@@ -23,7 +23,7 @@ class game:
         self.lmousekeys=self.mousekeys=pygame.mouse.get_pressed()
         self.lboardkeys=self.boardkeys=pygame.key.get_pressed()
         self.lec=self.jezd=self.wait=0
-        self.start=1
+        self.start=self.search=1
         self.napis=""
         self.kbufor=pygame.Surface((a_w,a_h))
         self.fpsclock=pygame.time.Clock()
@@ -71,8 +71,9 @@ class game:
     def main_menu(self):
         self.me.rysuj(self)
         if self.me[0]:
-            self.tryb=5
-            self.start=1
+            self.tryb=4
+            self.search=1
+            pygame.time.wait(100)
         if self.me[1]:
             self.tryb=2
             pygame.time.wait(100)
@@ -118,21 +119,41 @@ class game:
             pygame.time.wait(1)
         else:
             self.tryb=1
-        
+    
+    
+    def ask_map(self):
+        if self.search:
+            self.search=0
+            self.maps=menu((self.a_w/2-100, 50, 200, 30), 5, (200,200,200),(220,220,220),(0,0,0), 15, 1)
+            for f in os.listdir("maps"):
+                if os.path.isdir(os.path.join("maps", f)):
+                    self.maps.push_back(str(f))
+        self.maps.rysuj(self)
+        for t in range(0,len(self.maps.but)):
+            if self.maps.but[t].cl:
+                self.start=1
+                self.tryb=5
+                self.map=mapa(pa("maps/"+str(self.maps.but[t].text)), 0)
+        pygame.time.wait(1)
         
     def czolgi(self):
         if self.start:
             self.map.reload()
             self.nab=[]
             self.gracze=[]
-            pl=player(100,100,20,20,self.ini.read("gracz1","up"),self.ini.read("gracz1","down"),self.ini.read("gracz1","left"),self.ini.read("gracz1","right"),self.ini.read("gracz1","speed"),self.ini.read("gracz1","shoot"),self.ini.read("gracz1","color"),2,2,1)
-            self.gracze.append(pl)
-            pl=player(100,self.e_h-100,20,20,self.ini.read("gracz2","up"),self.ini.read("gracz2","down"),self.ini.read("gracz2","left"),self.ini.read("gracz2","right"),self.ini.read("gracz2","speed"),self.ini.read("gracz2","shoot"),self.ini.read("gracz2","color"),2,170,2)
-            self.gracze.append(pl)
-            pl=player(self.e_w-100,self.e_h-100,20,20,self.ini.read("gracz3","up"),self.ini.read("gracz3","down"),self.ini.read("gracz3","left"),self.ini.read("gracz3","right"),self.ini.read("gracz3","speed"),self.ini.read("gracz3","shoot"),self.ini.read("gracz3","color"),102,2,3)
-            self.gracze.append(pl)
-            pl=player(self.e_w-100,100,20,20,self.ini.read("gracz4","up"),self.ini.read("gracz4","down"),self.ini.read("gracz4","left"),self.ini.read("gracz4","right"),self.ini.read("gracz4","speed"),self.ini.read("gracz4","shoot"),self.ini.read("gracz4","color"),102,170,4)
-            self.gracze.append(pl)
+            for x in range(0,len(self.map.gracze)):
+                pl=player(self.map.gracze[x][0],
+                self.map.gracze[x][1],  20,  20,
+                self.ini.read("gracz"+str(x+1),"up"),
+                self.ini.read("gracz"+str(x+1),"down"),
+                self.ini.read("gracz"+str(x+1),"left"),
+                self.ini.read("gracz"+str(x+1),"right"),
+                self.ini.read("gracz"+str(x+1),"speed"),
+                self.ini.read("gracz"+str(x+1),"shoot"),
+                self.ini.read("gracz"+str(x+1),"color"), 
+                self.ini.read("gracz"+str(x+1),"ppx"),
+                self.ini.read("gracz"+str(x+1),"ppy"),  x+1)
+                self.gracze.append(pl)
             self.lec=self.jezd=pygame.time.get_ticks()
             self.start=0
             
@@ -186,6 +207,8 @@ class game:
                 self.ustawienia()
             elif self.tryb==3:
                 self.czekaj()
+            elif self.tryb==4:
+                self.ask_map()
             elif self.tryb==5:
                 self.czolgi()
             

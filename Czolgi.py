@@ -7,8 +7,11 @@ from pygame.locals import *
 def pa(name):
     return sys.path[0]+"/"+name
 
+#sys.path.append(pa("sys"))
+
 execfile(pa("sys/fn.py"))
 execfile(pa("sys/ini.py"))
+#from map import mapa
 execfile(pa("sys/map.py"))
 execfile(pa("sys/kula.py"))
 execfile(pa("sys/player.py"))
