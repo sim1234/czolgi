@@ -121,7 +121,7 @@ class game:
             self.tryb=1
     
     
-    def ask_map(self):
+    def ask_map(self):#lista map
         if self.search:
             self.search=0
             self.maps=menu((self.a_w/2-100, 50, 200, 30), 5, (200,200,200),(220,220,220),(0,0,0), 15, 1)
@@ -136,7 +136,7 @@ class game:
                 self.map=mapa(pa("maps/"+str(self.maps.but[t].text)), 0)
         pygame.time.wait(1)
         
-    def czolgi(self):
+    def czolgi(self):#właściwa gra
         if self.start:
             self.map.reload()
             self.nab=[]
