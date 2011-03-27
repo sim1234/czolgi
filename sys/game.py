@@ -1,5 +1,14 @@
 # coding: utf-8
 
+import pygame, sys, os
+from pygame.locals import * 
+from fn import *
+from ini import *
+from map import *
+from kula import *
+from player import *
+from button import *
+
 class game:
     def __init__(self, a_w, a_h, a_wd, a_hd, caption, maxfps):
         pygame.init() 
@@ -34,7 +43,7 @@ class game:
          
     
     def _wait(self, czas, napiss):
-        self.wait=int(czas*10)+time.time()*10
+        self.wait=int(czas*1000)+pygame.time.get_ticks()
         font = pygame.font.Font(pygame.font.match_font('doesNotExist,Arial'), 20)
         text = font.render(napiss, True, (0,0,0), (220,220,255))
         textRect = text.get_rect()
@@ -114,7 +123,7 @@ class game:
         
         
     def czekaj(self):
-        if time.time()*10<=self.wait:
+        if pygame.time.get_ticks()<=self.wait:
             self.bufor.blit(self.kbufor,(0,0))
             pygame.time.wait(1)
         else:
@@ -125,8 +134,8 @@ class game:
         if self.search:
             self.search=0
             self.maps=menu((self.a_w/2-100, 50, 200, 30), 5, (200,200,200),(220,220,220),(0,0,0), 15, 1)
-            for f in os.listdir("maps"):
-                if os.path.isdir(os.path.join("maps", f)):
+            for f in os.listdir(pa("maps")):
+                if os.path.isdir(pa("maps/"+str(f))):
                     self.maps.push_back(str(f))
         self.maps.rysuj(self)
         for t in range(0,len(self.maps.but)):
@@ -195,7 +204,7 @@ class game:
  
         if len(self.gracze)<=1:
             self.start=1
-            self._wait(5, "Wygral gracz "+str(self.gracze[0].name))
+            self._wait(2, "Wygral gracz "+str(self.gracze[0].name))
         
         
     def graj(self):

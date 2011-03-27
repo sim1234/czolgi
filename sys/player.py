@@ -1,5 +1,10 @@
 # coding: utf-8
 
+import pygame, sys, os
+from pygame.locals import * 
+from fn import *
+from kula import *
+
 class player:
   
     def __init__(self, p_x, p_y, width, height, k_w, k_s, k_a, k_d, k_sp, k_sh, colr, pp_x, pp_y, p_name):

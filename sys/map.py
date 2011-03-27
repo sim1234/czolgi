@@ -1,5 +1,10 @@
 # coding: utf-8
 
+import pygame, sys, os
+from pygame.locals import * 
+from fn import *
+from ini import *
+
 class mapa:
     def __init__(self, name, serio=1):
         self.name=name

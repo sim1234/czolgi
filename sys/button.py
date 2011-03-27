@@ -1,5 +1,8 @@
 # coding: utf-8
 
+import pygame, sys, os
+from pygame.locals import * 
+
 class button :
     def __init__(self, (pxt, pyt, wt, ht), cl1t, cl2t, tclt, textt, size=10, rk=0):
         self.px=pxt
@@ -63,7 +66,7 @@ class menu:
         self.cl2=cl2t
         self.tcl=tclt
         self.o=ot
-        self.pos=0
+        self.pos=-2
         self.kt=pygame.key.get_pressed()
         self.str=strzalki
         self.but=[]

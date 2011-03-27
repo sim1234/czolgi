@@ -1,3 +1,9 @@
+# coding: utf-8
+
+import pygame, sys, os
+from pygame.locals import * 
+from fn import *
+
 class kula:
     def __init__(self, p_x, p_y, v_x, v_y):
         self.px=p_x

@@ -1,5 +1,11 @@
 # coding: utf-8
 
+import pygame, sys, os
+from pygame.locals import * 
+
+def pa(name):
+    return sys.path[0]+"/"+name
+
 def load_image(name, colorkey=None):
     try:
         image = pygame.image.load(name)
