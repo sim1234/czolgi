@@ -1,0 +1,20 @@
+rm -- *.pyc
+rm -- *~
+cd sys
+rm -- *.pyc
+rm -- *~
+cd ..
+cd data
+rm -- *.pyc
+rm -- *~
+cd ..
+cd maps
+cd mapa1
+rm -- *.pyc
+rm -- *~
+cd ..
+cd masakra
+rm -- *.pyc
+rm -- *~
+cd ..
+cd ..

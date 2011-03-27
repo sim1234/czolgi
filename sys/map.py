@@ -9,16 +9,18 @@ class mapa:
     def __init__(self, name, serio=1):
         self.name=name
         if serio:
-            self.bm=load_image(self.name+"/mapa.bmp")
+            self.bmp=load_image(self.name+"/mapa.bmp")
             t=self.bm.get_rect()
             self.w=t.w
             self.h=t.h
+            self.bm=pygame.Surface((self.w,self.h))
             i=inifile(self.name+"/mapa.map")
             self.gracze=[]
             for x in range(0,int(i.read("ustawienia","gracze"))):
                 self.gracze.append(i.read("ustawienia",str(x+1)).split(","))
             self.rozw=str_to_col(i.read("ustawienia","rozw"))
             self.odb=str_to_col(i.read("ustawienia","odb"))
+            self.objekty=[]
             
     
     def reload(self):
@@ -53,3 +55,9 @@ class mapa:
             self.bm.set_at((px,py), c)
             return 1
         return 0
+        
+    def rysuj(self):
+        self.bm.blit(self.bmp,(0,0))
+    
+    def jezdz(self, dane):
+        a=""

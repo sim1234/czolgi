@@ -165,7 +165,8 @@ class game:
                 self.gracze.append(pl)
             self.lec=self.jezd=pygame.time.get_ticks()
             self.start=0
-            
+        
+        self.map.rysuj()
         self.bufor.blit(self.map.bm,(0,0))
         pygame.draw.rect(self.bufor, (200,200,200),(self.e_w,0,self.a_w,self.a_h))
                 
