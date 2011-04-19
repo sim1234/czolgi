@@ -5,12 +5,18 @@ from pygame.locals import *
 from fn import *
 
 class kula:
-    def __init__(self, p_x, p_y, v_x, v_y):
+    def __init__(self, p_x, p_y, v_x, v_y, lifetime=-1):
         self.px=p_x
         self.py=p_y
         self.vx=v_x
         self.vy=v_y
+        self.tleft=int(lifetime*250)
     def jezdz(self, dane):
+        if self.tleft>0:
+            self.tleft-=1
+        if self.tleft==0:
+            return 1    
+            
         self.px+=self.vx/4.0
         self.py+=self.vy/4.0
         if self.px<0 or self.px>dane.e_w or self.py<0 or self.py>dane.e_h: return 1

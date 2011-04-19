@@ -31,7 +31,7 @@ class game:
         self.map=mapa(pa("maps/mapa1"),0)
         self.lmousekeys=self.mousekeys=pygame.mouse.get_pressed()
         self.lboardkeys=self.boardkeys=pygame.key.get_pressed()
-        self.lec=self.jezd=self.wait=0
+        self.anim=self.lec=self.jezd=self.wait=0
         self.start=self.search=1
         self.napis=""
         self.kbufor=pygame.Surface((a_w,a_h))
@@ -163,7 +163,7 @@ class game:
                 self.ini.read("gracz"+str(x+1),"ppx"),
                 self.ini.read("gracz"+str(x+1),"ppy"),  x+1)
                 self.gracze.append(pl)
-            self.lec=self.jezd=pygame.time.get_ticks()
+            self.anim=self.lec=self.jezd=pygame.time.get_ticks()
             self.start=0
         
         self.map.rysuj()
@@ -171,7 +171,7 @@ class game:
         pygame.draw.rect(self.bufor, (200,200,200),(self.e_w,0,self.a_w,self.a_h))
                 
         atim=pygame.time.get_ticks()
-        while self.lec<atim or self.jezd<atim:#pętla timerów
+        while self.lec<atim or self.jezd<atim or self.anim<atim:#pętla timerów
             if self.lec<atim:#timer do kul
                 t=0
                 tlen=len(self.nab)
@@ -190,6 +190,11 @@ class game:
                     self.gracze[t].jezdz(self)
                     t+=1
                 self.jezd+=7
+                
+            if self.anim<atim:#timer do objektów mapy
+                self.map.jezdz(self)
+                self.anim+=10
+                
             atim=pygame.time.get_ticks()
 
         t=0

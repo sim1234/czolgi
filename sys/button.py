@@ -78,7 +78,7 @@ class menu:
     def push_back(self, txt, mk=0):
         t=button((self.px, self.py+len(self.but)*(self.h+self.o), self.w, self.h), self.cl1, self.cl2, self.tcl, txt, self.size, mk)
         self.but.append(t)
-        self.but[-1]=button((self.px, self.py+len(self.but)*(self.h+self.o), self.w, self.h), self.cl1, self.cl2, self.tcl, txt, self.size, mk)
+        #self.but[-1]=button((self.px, self.py+len(self.but)*(self.h+self.o), self.w, self.h), self.cl1, self.cl2, self.tcl, txt, self.size, mk)
         self.but[-1].render()
       
     def rysuj(self, dane):
