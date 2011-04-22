@@ -48,7 +48,7 @@ class mapa:
         
     def zamien(self, dane, (px, py)):
         if(px<0 or py<0 or px>=self.w or py>=self.h): return 0
-        c=self.bm.get_at((px,py))
+        c=self.bmp.get_at((px,py))
         if self.zniszczy(c):
             c[0]+=191
             if(c[0]>255): c[0]=255
@@ -56,7 +56,7 @@ class mapa:
             if(c[1]>255): c[1]=255
             c[2]+=191
             if(c[1]>255): c[1]=255
-            self.bm.set_at((px,py), c)
+            self.bmp.set_at((px,py), c)
             return 1
         return 0
         
